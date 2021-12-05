@@ -23,10 +23,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 
 import zqu.eqms.dao.LoginDao;
+import zqu.eqms.domain.StaffDomain;
 
 public class LoginFrame extends JFrame {
 
@@ -179,29 +178,23 @@ public class LoginFrame extends JFrame {
 			JOptionPane.showMessageDialog(null, "帐号和密码不能为空", "提示", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else {
-			String user_= null;
-			String pw_= null;
-			ResultSet rs = null;
-			rs = LoginDao.validateQuery(user);
-			try {
-				while(rs.next()) {
-					user_ = rs.getString("sno");
-					pw_ = rs.getString("spw");
-				}
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			if(user_=="") {
+			StaffDomain sd = LoginDao.validate(user).get(0);
+			if(sd.getId() != "") {
 				if(rdbtnNewRadioButton.isSelected()) {
-					if(user.equals(user_) && pw.equals(pw_)) {
-						JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+					if(sd.isIsmanager()) {
+						if(user.equals(sd.getId()) && pw.equals(sd.getPassword())) {
+							JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+						}
+						else {
+							JOptionPane.showMessageDialog(null, "帐号或密码错误！", "提示", JOptionPane.INFORMATION_MESSAGE);
+						}
 					}
 					else {
-						JOptionPane.showMessageDialog(null, "帐号或密码错误！", "提示", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "您不是管理员！", "提示", JOptionPane.INFORMATION_MESSAGE);
 					}
 				};
 				if(rdbtnNewRadioButton_1.isSelected()) {
-					if(user.equals(user_) && pw.equals(pw_)) {
+					if(user.equals(sd.getId()) && pw.equals(sd.getPassword())) {
 						JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
 					}
 					else {
