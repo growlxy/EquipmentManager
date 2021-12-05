@@ -85,7 +85,9 @@ public class LoginFrame extends JFrame {
 		lblNewLabel_2.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(null, "登陆成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+				dispose();
+				RegisterFrame rf = new RegisterFrame();
+				rf.setVisible(true);
 			}
 		});
 		lblNewLabel_2.setFont(new Font("宋体", Font.PLAIN, 14));
