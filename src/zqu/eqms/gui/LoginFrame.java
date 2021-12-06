@@ -119,6 +119,9 @@ public class LoginFrame extends JFrame {
 		lblNewLabel_4.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				dispose();
+				ForgetPwFrame fp = new ForgetPwFrame();
+				fp.setVisible(true);
 			}
 		});
 		lblNewLabel_4.setFont(new Font("宋体", Font.PLAIN, 14));
@@ -180,8 +183,8 @@ public class LoginFrame extends JFrame {
 			JOptionPane.showMessageDialog(null, "帐号和密码不能为空", "提示", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else {
-			StaffDomain sd = LoginDao.validate(user).get(0);
-			if(sd.getId() != "") {
+			if(LoginDao.validate(user).isEmpty() == false) {
+				StaffDomain sd = LoginDao.validate(user).get(0);
 				if(rdbtnNewRadioButton.isSelected()) {
 					if(sd.isIsmanager()) {
 						if(user.equals(sd.getId()) && pw.equals(sd.getPassword())) {
