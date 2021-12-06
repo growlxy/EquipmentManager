@@ -21,6 +21,7 @@ import java.awt.Font;
 import javax.swing.border.MatteBorder;
 
 import zqu.eqms.dao.RegisterDao;
+import zqu.eqms.domain.DepartmentDomain;
 
 import java.awt.Color;
 import javax.swing.JComboBox;
@@ -167,18 +168,22 @@ public class RegisterFrame extends JFrame {
 		panel.add(panel_6);
 		panel_6.setLayout(null);
 		
-		// TODO 改成下拉式选择
 		JLabel lblNewLabel_4 = new JLabel("所属部门");
 		lblNewLabel_4.setFont(new Font("宋体", Font.PLAIN, 14));
 		lblNewLabel_4.setBounds(67, 24, 57, 18);
 		panel_6.add(lblNewLabel_4);
-		
+
 		comboBox = new JComboBox<Object>();
 		comboBox.setFont(new Font("宋体", Font.PLAIN, 12));
 		comboBox.setBounds(149, 23, 105, 21);
 		comboBox.addItem("请选择部门");
-		comboBox.addItem("1");
-		comboBox.addItem("2");
+		int i = 0;
+		String[] dno = new String[RegisterDao.displayDepartmentName().size()];
+		for(DepartmentDomain d:RegisterDao.displayDepartmentName()) {
+			comboBox.addItem(d.getName());
+			dno[i] = d.getId();
+			i++;
+		}
 		panel_6.add(comboBox);
 		
 		JPanel panel_1 = new JPanel();
@@ -186,7 +191,6 @@ public class RegisterFrame extends JFrame {
 		flowLayout.setVgap(15);
 		contentPane.add(panel_1, BorderLayout.SOUTH);
 		
-		// TODO 判断空值
 		JButton btnNewButton = new JButton("注册");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -194,8 +198,14 @@ public class RegisterFrame extends JFrame {
 				String password = textField_1.getText();
 				String name = textField_2.getText();
 				String tel = textField_3.getText();
-				String depid = (String) comboBox.getSelectedItem();
-				register(id, password, name, tel, depid);
+				String depid = "0";
+				if(comboBox.getSelectedIndex()!=0) depid = dno[comboBox.getSelectedIndex()-1];		
+				if(id.isEmpty() || password.isEmpty() || name.isEmpty() || tel.isEmpty()) {
+					JOptionPane.showMessageDialog(null, "注册信息不完整！", "提示", JOptionPane.INFORMATION_MESSAGE);
+				}
+				else {
+					register(id, password, name, tel, depid);
+				}	
 			}
 		});
 		panel_1.add(btnNewButton);
@@ -209,15 +219,24 @@ public class RegisterFrame extends JFrame {
 		panel_1.add(btnNewButton_1);
 	}
 	
-	//	TODO 增加判定条件
 	public void register(String id, String password, String name, String tel, String depid) {
 		if(RegisterDao.notExisting(id)) {
 			if(password.length()>=8 && password.length()<=20) {
-				if(RegisterDao.registerUpdate(id, password, name, tel, depid)!=0) {
-					JOptionPane.showMessageDialog(null, "注册成功，返回！", "提示", JOptionPane.INFORMATION_MESSAGE);
-					dispose();
-					LoginFrame frame = new LoginFrame();
-					frame.setVisible(true);
+				if(tel.length()==11) {
+					if(depid!="0") {
+						if(RegisterDao.registerUpdate(id, password, name, tel, depid)!=0) {
+							JOptionPane.showMessageDialog(null, "注册成功，返回！", "提示", JOptionPane.INFORMATION_MESSAGE);
+							dispose();
+							LoginFrame frame = new LoginFrame();
+							frame.setVisible(true);
+						}
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "您还没有选择部门！", "提示", JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "手机号码不符合要求！", "提示", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 			else {

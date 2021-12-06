@@ -174,7 +174,7 @@ public class LoginFrame extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblNewLabel, BorderLayout.NORTH);
 	}
-	
+//	TODO 增加用户不存在情况
 	public void login(String user, String pw) {
 		if(user.equals("") || pw.equals("")) {
 			JOptionPane.showMessageDialog(null, "帐号和密码不能为空", "提示", JOptionPane.INFORMATION_MESSAGE);

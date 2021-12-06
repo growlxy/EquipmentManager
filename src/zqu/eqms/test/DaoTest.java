@@ -1,16 +1,13 @@
 package zqu.eqms.test;
 
 import zqu.eqms.dao.RegisterDao;
+import zqu.eqms.domain.DepartmentDomain;
 
 public class DaoTest {
 	public static void main(String[] args) {
-		try {
-			if(RegisterDao.registerUpdate("111111", "1", "1", "1", "10001")!=0) {
-				System.out.println("1");
-			}
-		} catch (Exception e) {
-			// TODO 自动生成的 catch 块
-			e.printStackTrace();
-		}
+		for(DepartmentDomain d:RegisterDao.displayDepartmentName())
+		System.out.println(d);
+		System.out.println(RegisterDao.displayDepartmentName().size());
+		
 	}
 }

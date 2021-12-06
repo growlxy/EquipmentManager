@@ -3,6 +3,7 @@ package zqu.eqms.dao;
 import java.sql.*;
 import java.util.ArrayList;
 
+import zqu.eqms.domain.DepartmentDomain;
 import zqu.eqms.domain.StaffDomain;
 import zqu.eqms.util.ConnectionUtil;
 
@@ -50,5 +51,44 @@ public class RegisterDao {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	public static ResultSet departmentQuery() {
+		try {
+			String sql = "select d.dno, d.dname from department d";
+			ps = ConnectionUtil.getConnection().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+			rs = ps.executeQuery();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return rs;
+	}
+	
+	public static ArrayList<DepartmentDomain> displayDepartmentName(){
+		rs = RegisterDao.departmentQuery();
+		ArrayList<DepartmentDomain> al = new ArrayList<DepartmentDomain>();
+		
+		int count = 0;
+		try {
+			rs.last();
+			count = rs.getRow();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		String[] name = new String[count];
+		try {
+			rs.beforeFirst();
+			int i = 0;
+			while(rs.next()) {
+				al.add(new DepartmentDomain(rs.getString("dno"), rs.getString("dname"), null));
+				name[i] = rs.getString("dname");
+				i++;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return al;
 	}
 }
