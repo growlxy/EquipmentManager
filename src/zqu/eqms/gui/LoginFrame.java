@@ -12,9 +12,12 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
+
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import javax.swing.JPasswordField;
 import javax.swing.JRadioButton;
@@ -60,9 +63,10 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame() {
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		setTitle("用户登录");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	
+		setBounds((d.width-450)/2, (d.height-300)/2, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -177,7 +181,7 @@ public class LoginFrame extends JFrame {
 		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		contentPane.add(lblNewLabel, BorderLayout.NORTH);
 	}
-//	TODO 增加用户不存在情况
+	
 	public void login(String user, String pw) {
 		if(user.equals("") || pw.equals("")) {
 			JOptionPane.showMessageDialog(null, "帐号和密码不能为空", "提示", JOptionPane.INFORMATION_MESSAGE);

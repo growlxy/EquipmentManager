@@ -12,6 +12,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JButton;
 import java.awt.GridLayout;
+import java.awt.Toolkit;
+
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -24,6 +26,8 @@ import zqu.eqms.dao.RegisterDao;
 import zqu.eqms.domain.DepartmentDomain;
 
 import java.awt.Color;
+import java.awt.Dimension;
+
 import javax.swing.JComboBox;
 
 public class RegisterFrame extends JFrame {
@@ -59,8 +63,10 @@ public class RegisterFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterFrame() {
+		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
+		setTitle("注册");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 341, 458);
+		setBounds((d.width-341)/2, (d.height-458)/2, 341, 458);
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -179,9 +185,9 @@ public class RegisterFrame extends JFrame {
 		comboBox.addItem("请选择部门");
 		int i = 0;
 		String[] dno = new String[RegisterDao.displayDepartmentName().size()];
-		for(DepartmentDomain d:RegisterDao.displayDepartmentName()) {
-			comboBox.addItem(d.getName());
-			dno[i] = d.getId();
+		for(DepartmentDomain dd:RegisterDao.displayDepartmentName()) {
+			comboBox.addItem(dd.getName());
+			dno[i] = dd.getId();
 			i++;
 		}
 		panel_6.add(comboBox);
