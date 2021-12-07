@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import zqu.eqms.dao.ForgetPwDao;
@@ -36,6 +37,8 @@ public class ForgetPwFrame extends JFrame {
 	private JTextField textField;
 	private JTextField textField_1;
 	private JTextField textField_2;
+	private JPasswordField passwordField;
+	private JPasswordField passwordField_1;
 
 	/**
 	 * Launch the application.
@@ -214,10 +217,11 @@ public class ForgetPwFrame extends JFrame {
 			lblNewLabel.setBounds(65, 23, 72, 21);
 			panel_2.add(lblNewLabel);
 			
-			textField = new JTextField();
-			textField.setBounds(147, 23, 105, 21);
-			panel_2.add(textField);
-			textField.setColumns(10);
+			
+			passwordField = new JPasswordField();
+			passwordField.setBounds(147, 23, 105, 21);
+			panel_2.add(passwordField);
+			passwordField.setColumns(10);
 			
 			JPanel panel_3 = new JPanel();
 			panel.add(panel_3);
@@ -228,20 +232,23 @@ public class ForgetPwFrame extends JFrame {
 			lblNewLabel_1.setBounds(65, 23, 72, 21);
 			panel_3.add(lblNewLabel_1);
 			
-			textField_1 = new JTextField();
-			textField_1.setBounds(147, 23, 105, 21);
-			panel_3.add(textField_1);
-			textField_1.setColumns(10);
+			passwordField_1 = new JPasswordField();
+			passwordField_1.setBounds(147, 23, 105, 21);
+			panel_3.add(passwordField_1);
+			passwordField_1.setColumns(10);
 			
 			JPanel panel_1 = new JPanel();
 			FlowLayout flowLayout = (FlowLayout) panel_1.getLayout();
 			flowLayout.setVgap(15);
 			contentPane.add(panel_1, BorderLayout.SOUTH);
 			
-//			TODO 提交功能
 			JButton btnNewButton = new JButton("提  交");
 			btnNewButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					String user = textField.getText();
+					String pw = new String(passwordField.getPassword());
+					String pwR = new String(passwordField_1.getPassword());
+					forgerPwNext(user, pw, pwR);
 				}
 			});
 			panel_1.add(btnNewButton);
@@ -249,7 +256,7 @@ public class ForgetPwFrame extends JFrame {
 			JButton btnNewButton_1 = new JButton("重  置");
 			btnNewButton_1.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					clear();
+					clearNext();
 				}
 			});
 			panel_1.add(btnNewButton_1);
@@ -269,6 +276,7 @@ public class ForgetPwFrame extends JFrame {
 	public void forgerPw(String user, String tel, String name) {
 		if(user.equals("")) {
 			JOptionPane.showMessageDialog(null, "帐号不能为空！", "提示", JOptionPane.INFORMATION_MESSAGE);
+			clear();
 		}
 		else {
 			if(ForgetPwDao.validate(user).isEmpty() == false) {
@@ -292,10 +300,12 @@ public class ForgetPwFrame extends JFrame {
 				}
 				else {
 					JOptionPane.showMessageDialog(null, "管理员请通过后台修改密码！", "提示", JOptionPane.INFORMATION_MESSAGE);
+					clear();
 				}
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "用户不存在！", "提示", JOptionPane.INFORMATION_MESSAGE);
+				clear();
 			}
 		}
 	}
@@ -313,5 +323,43 @@ public class ForgetPwFrame extends JFrame {
 		if(sel == JOptionPane.YES_OPTION) {
 			System.exit(0);
 		}
+	}
+	
+	public void forgerPwNext(String user, String pw, String pwR) {
+		if(pw.equals("") || pwR.equals("")) {
+			JOptionPane.showMessageDialog(null, "输入不完整！", "提示", JOptionPane.INFORMATION_MESSAGE);
+			clearNext();
+		}
+		else {
+			if(pw.length()>=8 && pw.length()<=20) {
+				if(pw.equals(pwR)) {
+					if(ForgetPwDao.samePassword(user, pw) == false) {
+						if(ForgetPwDao.passwordUpdate(user, pw)!=0) {
+							JOptionPane.showMessageDialog(null, "修改密码成功，返回！", "提示", JOptionPane.INFORMATION_MESSAGE);
+							dispose();
+							LoginFrame frame = new LoginFrame();
+							frame.setVisible(true);
+						}
+					}
+					else {
+						JOptionPane.showMessageDialog(null, "新密码不能和原密码一样！", "提示", JOptionPane.INFORMATION_MESSAGE);
+						clearNext();
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "两次输入的密码不一致！", "提示", JOptionPane.INFORMATION_MESSAGE);
+					clearNext();
+				}
+			}
+			else {
+				JOptionPane.showMessageDialog(null, "密码长度不符合要求！", "提示", JOptionPane.INFORMATION_MESSAGE);
+				clearNext();
+			}
+		}
+	}
+	
+	public void clearNext() {
+		passwordField.setText("");
+		passwordField_1.setText("");
 	}
 }
