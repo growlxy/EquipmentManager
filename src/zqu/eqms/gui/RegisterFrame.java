@@ -63,6 +63,7 @@ public class RegisterFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterFrame() {
+		setResizable(false);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		setTitle("注册");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

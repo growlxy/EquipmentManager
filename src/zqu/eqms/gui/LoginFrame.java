@@ -63,6 +63,7 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame() {
+		setResizable(false);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		setTitle("用户登录");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);	

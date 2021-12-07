@@ -61,6 +61,7 @@ public class ForgetPwFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public ForgetPwFrame() {
+		setResizable(false);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		setTitle("忘记密码");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
