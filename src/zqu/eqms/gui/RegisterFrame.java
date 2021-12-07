@@ -251,6 +251,7 @@ public class RegisterFrame extends JFrame {
 		}
 		else {
 			JOptionPane.showMessageDialog(null, "该用户已存在！", "提示", JOptionPane.INFORMATION_MESSAGE);
+			clear();
 		}
 	}
 	

@@ -10,7 +10,6 @@ import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 
 import zqu.eqms.dao.ForgetPwDao;
-import zqu.eqms.domain.StaffDomain;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -39,6 +38,8 @@ public class ForgetPwFrame extends JFrame {
 	private JTextField textField_2;
 	private JPasswordField passwordField;
 	private JPasswordField passwordField_1;
+	
+	private ForgetPwNextFrame fpn;
 
 	/**
 	 * Launch the application.
@@ -279,17 +280,16 @@ public class ForgetPwFrame extends JFrame {
 			clear();
 		}
 		else {
-			if(ForgetPwDao.validate(user).isEmpty() == false) {
-				StaffDomain sd = ForgetPwDao.validate(user).get(0);
-				if(sd.isIsmanager() == false) {
+			if(ForgetPwDao.validate(user) != null) {
+				if(ForgetPwDao.validate(user).isIsmanager() == false) {
 					if(tel.equals("") || name.equals("")) {
 						JOptionPane.showMessageDialog(null, "验证信息不完整！", "提示", JOptionPane.INFORMATION_MESSAGE);
 					}
 					else {
-						if(tel.equals(sd.getTel()) && name.equals(sd.getName())) {
+						if(tel.equals(ForgetPwDao.validate(user).getTel()) && name.equals(ForgetPwDao.validate(user).getName())) {
 							JOptionPane.showMessageDialog(null, "验证成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
 							dispose();
-							ForgetPwNextFrame fpn = new ForgetPwNextFrame();
+							fpn = new ForgetPwNextFrame();
 							fpn.setVisible(true);
 						}
 						else {
@@ -336,7 +336,7 @@ public class ForgetPwFrame extends JFrame {
 					if(ForgetPwDao.samePassword(user, pw) == false) {
 						if(ForgetPwDao.passwordUpdate(user, pw)!=0) {
 							JOptionPane.showMessageDialog(null, "修改密码成功，返回！", "提示", JOptionPane.INFORMATION_MESSAGE);
-							dispose();
+							fpn.dispose();
 							LoginFrame frame = new LoginFrame();
 							frame.setVisible(true);
 						}

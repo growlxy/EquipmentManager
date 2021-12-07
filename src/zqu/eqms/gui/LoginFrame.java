@@ -187,8 +187,8 @@ public class LoginFrame extends JFrame {
 			JOptionPane.showMessageDialog(null, "帐号和密码不能为空！", "提示", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else {
-			if(LoginDao.validate(user).isEmpty() == false) {
-				StaffDomain sd = LoginDao.validate(user).get(0);
+			StaffDomain sd = LoginDao.validate(user);
+			if(LoginDao.validate(user) != null) {		
 				if(rdbtnNewRadioButton.isSelected()) {
 					if(sd.isIsmanager()) {
 						if(user.equals(sd.getId()) && pw.equals(sd.getPassword())) {
@@ -196,10 +196,12 @@ public class LoginFrame extends JFrame {
 						}
 						else {
 							JOptionPane.showMessageDialog(null, "帐号或密码错误！", "提示", JOptionPane.INFORMATION_MESSAGE);
+							clear();
 						}
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "您不是管理员！", "提示", JOptionPane.INFORMATION_MESSAGE);
+						clear();
 					}
 				};
 				if(rdbtnNewRadioButton_1.isSelected()) {
@@ -208,11 +210,13 @@ public class LoginFrame extends JFrame {
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "帐号或密码错误！", "提示", JOptionPane.INFORMATION_MESSAGE);
+						clear();
 					}
 				};
 			}
 			else {
 				JOptionPane.showMessageDialog(null, "用户不存在！", "提示", JOptionPane.INFORMATION_MESSAGE);
+				clear();
 			}
 		}
 	}

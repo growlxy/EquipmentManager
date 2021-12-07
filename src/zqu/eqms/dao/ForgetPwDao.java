@@ -1,7 +1,6 @@
 package zqu.eqms.dao;
 
 import java.sql.*;
-import java.util.ArrayList;
 
 import zqu.eqms.domain.StaffDomain;
 import zqu.eqms.util.ConnectionUtil;
@@ -21,18 +20,17 @@ public class ForgetPwDao {
 		return rs;
 	}
 	
-//	TODO 重构不用ArrayList
-	public static ArrayList<StaffDomain> validate(String user){
+	public static StaffDomain validate(String user){
 		rs = ForgetPwDao.validateQuery(user);
-		ArrayList<StaffDomain> al = new ArrayList<StaffDomain>();
+		StaffDomain sd = null;
 		try {
 			while(rs.next()) {
-				al.add(new StaffDomain(rs.getString("sno"), null, rs.getString("sname"),  rs.getString("stel"), rs.getBoolean("sis_mana"), null));
+				sd = new StaffDomain(rs.getString("sno"), null, rs.getString("sname"),  rs.getString("stel"), rs.getBoolean("sis_mana"), null);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return al;
+		return sd;
 	}
 	
 	public static ResultSet passwordQuery(String user) {
