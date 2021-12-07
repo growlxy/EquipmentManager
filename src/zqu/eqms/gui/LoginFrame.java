@@ -184,7 +184,7 @@ public class LoginFrame extends JFrame {
 	
 	public void login(String user, String pw) {
 		if(user.equals("") || pw.equals("")) {
-			JOptionPane.showMessageDialog(null, "帐号和密码不能为空", "提示", JOptionPane.INFORMATION_MESSAGE);
+			JOptionPane.showMessageDialog(null, "帐号和密码不能为空！", "提示", JOptionPane.INFORMATION_MESSAGE);
 		}
 		else {
 			if(LoginDao.validate(user).isEmpty() == false) {
