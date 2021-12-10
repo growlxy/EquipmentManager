@@ -16,6 +16,7 @@ import java.awt.Toolkit;
 
 import javax.swing.JTextField;
 import javax.swing.border.LineBorder;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -63,6 +64,17 @@ public class LoginFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public LoginFrame() {
+		try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        }catch(Exception e) {
+        	e.printStackTrace();
+        }
+		
 		setResizable(false);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		setTitle("用户登录");
@@ -82,8 +94,9 @@ public class LoginFrame extends JFrame {
 		panel.add(panel_2);
 		
 		textField = new JTextField();
-		textField.setBounds(168, 39, 105, 21);
+		textField.setBounds(168, 39, 105, 26);
 		textField.setColumns(10);
+		textField.setToolTipText("test");
 		
 		JLabel lblNewLabel_2 = new JLabel("<html><u>注册</u><html>");
 		lblNewLabel_2.setForeground(Color.BLUE);
@@ -116,7 +129,7 @@ public class LoginFrame extends JFrame {
 		panel_3.add(lblNewLabel_3);
 		
 		textField_1 = new JPasswordField();
-		textField_1.setBounds(168, 10, 105, 21);
+		textField_1.setBounds(168, 10, 105, 26);
 		panel_3.add(textField_1);
 		textField_1.setColumns(10);
 		
@@ -193,7 +206,7 @@ public class LoginFrame extends JFrame {
 				if(rdbtnNewRadioButton.isSelected()) {
 					if(sd.isIsmanager()) {
 						if(user.equals(sd.getId()) && pw.equals(sd.getPassword())) {
-							JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "欢迎您，用户"+user+"！", "提示", JOptionPane.INFORMATION_MESSAGE);
 						}
 						else {
 							JOptionPane.showMessageDialog(null, "帐号或密码错误！", "提示", JOptionPane.INFORMATION_MESSAGE);
@@ -207,7 +220,10 @@ public class LoginFrame extends JFrame {
 				};
 				if(rdbtnNewRadioButton_1.isSelected()) {
 					if(user.equals(sd.getId()) && pw.equals(sd.getPassword())) {
-						JOptionPane.showMessageDialog(null, "登录成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+						JOptionPane.showMessageDialog(null, "欢迎您，管理员"+user+"！", "提示", JOptionPane.INFORMATION_MESSAGE);
+						dispose();
+						UserFrame uf = new UserFrame(user);
+						uf.setVisible(true);
 					}
 					else {
 						JOptionPane.showMessageDialog(null, "帐号或密码错误！", "提示", JOptionPane.INFORMATION_MESSAGE);

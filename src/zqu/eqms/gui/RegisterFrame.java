@@ -63,6 +63,17 @@ public class RegisterFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public RegisterFrame() {
+		try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        }catch(Exception e) {
+        	e.printStackTrace();
+        }
+		
 		setResizable(false);
 		Dimension d = Toolkit.getDefaultToolkit().getScreenSize();
 		setTitle("注册");
@@ -111,7 +122,7 @@ public class RegisterFrame extends JFrame {
 		panel_2.add(lblNewLabel);
 		
 		textField = new JTextField();
-		textField.setBounds(149, 23, 105, 21);
+		textField.setBounds(149, 23, 105, 26);
 		panel_2.add(textField);
 		textField.setColumns(10);
 		
@@ -131,7 +142,7 @@ public class RegisterFrame extends JFrame {
 		panel_3.add(lblNewLabel_1);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(149, 23, 105, 21);
+		textField_1.setBounds(149, 23, 105, 26);
 		panel_3.add(textField_1);
 		textField_1.setColumns(10);
 		
@@ -151,7 +162,7 @@ public class RegisterFrame extends JFrame {
 		panel_4.add(lblNewLabel_2);
 		
 		textField_2 = new JTextField();
-		textField_2.setBounds(149, 23, 105, 21);
+		textField_2.setBounds(149, 23, 105, 26);
 		panel_4.add(textField_2);
 		textField_2.setColumns(10);
 		
@@ -166,7 +177,7 @@ public class RegisterFrame extends JFrame {
 		panel_5.add(lblNewLabel_3);
 		
 		textField_3 = new JTextField();
-		textField_3.setBounds(149, 23, 105, 21);
+		textField_3.setBounds(149, 23, 105, 26);
 		panel_5.add(textField_3);
 		textField_3.setColumns(10);
 		
