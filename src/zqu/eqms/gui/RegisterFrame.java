@@ -29,6 +29,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 
 import javax.swing.JComboBox;
+import javax.swing.JPasswordField;
 
 public class RegisterFrame extends JFrame {
 
@@ -38,7 +39,7 @@ public class RegisterFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField textField;
-	private JTextField textField_1;
+	private JPasswordField textField_1;
 	private JTextField textField_2;
 	private JTextField textField_3;
 	private JComboBox<Object> comboBox;
@@ -122,14 +123,10 @@ public class RegisterFrame extends JFrame {
 		panel_2.add(lblNewLabel);
 		
 		textField = new JTextField();
-		textField.setBounds(149, 23, 105, 26);
+		textField.setToolTipText("帐号应为员工编号");
+		textField.setBounds(149, 21, 105, 26);
 		panel_2.add(textField);
 		textField.setColumns(10);
-		
-		JLabel lblNewLabel_6 = new JLabel("（帐号应为员工编号）");
-		lblNewLabel_6.setFont(new Font("宋体", Font.PLAIN, 11));
-		lblNewLabel_6.setBounds(55, 46, 211, 15);
-		panel_2.add(lblNewLabel_6);
 		
 		JPanel panel_3 = new JPanel();
 		panel_3.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.GRAY));
@@ -141,15 +138,11 @@ public class RegisterFrame extends JFrame {
 		lblNewLabel_1.setBounds(67, 24, 57, 18);
 		panel_3.add(lblNewLabel_1);
 		
-		textField_1 = new JTextField();
-		textField_1.setBounds(149, 23, 105, 26);
+		textField_1 = new JPasswordField();
+		textField_1.setToolTipText("密码应为8-20的英文、数字或符号组合");
+		textField_1.setBounds(149, 21, 105, 26);
 		panel_3.add(textField_1);
 		textField_1.setColumns(10);
-		
-		JLabel lblNewLabel_5 = new JLabel("（密码应为8-20的英文、数字或符号组合）");
-		lblNewLabel_5.setFont(new Font("宋体", Font.PLAIN, 11));
-		lblNewLabel_5.setBounds(55, 46, 211, 15);
-		panel_3.add(lblNewLabel_5);
 		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBorder(new MatteBorder(1, 0, 0, 0, (Color) Color.GRAY));
@@ -162,7 +155,7 @@ public class RegisterFrame extends JFrame {
 		panel_4.add(lblNewLabel_2);
 		
 		textField_2 = new JTextField();
-		textField_2.setBounds(149, 23, 105, 26);
+		textField_2.setBounds(149, 21, 105, 26);
 		panel_4.add(textField_2);
 		textField_2.setColumns(10);
 		
@@ -177,7 +170,8 @@ public class RegisterFrame extends JFrame {
 		panel_5.add(lblNewLabel_3);
 		
 		textField_3 = new JTextField();
-		textField_3.setBounds(149, 23, 105, 26);
+		textField_3.setToolTipText("11位手机号码");
+		textField_3.setBounds(149, 21, 105, 26);
 		panel_5.add(textField_3);
 		textField_3.setColumns(10);
 		
@@ -193,7 +187,7 @@ public class RegisterFrame extends JFrame {
 
 		comboBox = new JComboBox<Object>();
 		comboBox.setFont(new Font("宋体", Font.PLAIN, 12));
-		comboBox.setBounds(149, 23, 105, 21);
+		comboBox.setBounds(149, 21, 105, 26);
 		comboBox.addItem("请选择部门");
 		int i = 0;
 		String[] dno = new String[RegisterDao.displayDepartmentName().size()];
@@ -213,7 +207,7 @@ public class RegisterFrame extends JFrame {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String id = textField.getText();
-				String password = textField_1.getText();
+				String password = new String(textField_1.getPassword());
 				String name = textField_2.getText();
 				String tel = textField_3.getText();
 				String depid = "0";

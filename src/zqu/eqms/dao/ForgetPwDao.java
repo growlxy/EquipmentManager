@@ -16,6 +16,8 @@ public class ForgetPwDao {
 			rs = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close();
 		}
 		return rs;
 	}
@@ -29,6 +31,8 @@ public class ForgetPwDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close();
 		}
 		return sd;
 	}
@@ -40,6 +44,8 @@ public class ForgetPwDao {
 			rs = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close();
 		}
 		return rs;
 	}
@@ -53,6 +59,8 @@ public class ForgetPwDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close();
 		}
 		return pw.equals(sd.getPassword());
 	}
@@ -67,6 +75,8 @@ public class ForgetPwDao {
 			result = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close();
 		}
 		return result;
 	}

@@ -18,6 +18,8 @@ public class RegisterDao {
 			rs = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close();
 		}
 		return rs;
 	}
@@ -31,6 +33,8 @@ public class RegisterDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close();
 		}
 		return al.isEmpty();
 	}
@@ -49,6 +53,8 @@ public class RegisterDao {
 			result = ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close();
 		}
 		return result;
 	}
@@ -60,6 +66,8 @@ public class RegisterDao {
 			rs = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close();
 		}
 		return rs;
 	}
@@ -74,6 +82,8 @@ public class RegisterDao {
 			count = rs.getRow();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close();
 		}
 		
 		String[] name = new String[count];
@@ -87,8 +97,9 @@ public class RegisterDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close();
 		}
-		
 		return al;
 	}
 }

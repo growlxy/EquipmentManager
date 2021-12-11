@@ -16,6 +16,8 @@ public class LoginDao {
 			rs = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close();
 		}
 		return rs;
 	}
@@ -29,6 +31,8 @@ public class LoginDao {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} finally {
+			ConnectionUtil.close();
 		}
 		return sd;
 	}

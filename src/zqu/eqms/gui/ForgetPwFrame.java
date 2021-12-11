@@ -120,8 +120,7 @@ public class ForgetPwFrame extends JFrame {
 		panel_2.add(lblNewLabel);
 		
 		textField = new JTextField();
-		textField.setBounds(147, 23, 105, 26);
-//		textField.setToolTipText("Please enter your full name!");
+		textField.setBounds(147, 21, 105, 26);
 		panel_2.add(textField);
 		textField.setColumns(10);
 		
@@ -135,7 +134,7 @@ public class ForgetPwFrame extends JFrame {
 		panel_3.add(lblNewLabel_1);
 		
 		textField_1 = new JTextField();
-		textField_1.setBounds(147, 23, 105, 26);
+		textField_1.setBounds(147, 21, 105, 26);
 		panel_3.add(textField_1);
 		textField_1.setColumns(10);
 		
@@ -149,7 +148,7 @@ public class ForgetPwFrame extends JFrame {
 		panel_4.add(lblNewLabel_2);
 		
 		textField_2 = new JTextField();
-		textField_2.setBounds(147, 23, 105, 26);
+		textField_2.setBounds(147, 21, 105, 26);
 		panel_4.add(textField_2);
 		textField_2.setColumns(10);
 		
@@ -233,7 +232,7 @@ public class ForgetPwFrame extends JFrame {
 			
 			
 			passwordField = new JPasswordField();
-			passwordField.setBounds(147, 23, 105, 26);
+			passwordField.setBounds(147, 21, 105, 26);
 			panel_2.add(passwordField);
 			passwordField.setColumns(10);
 			
@@ -247,7 +246,7 @@ public class ForgetPwFrame extends JFrame {
 			panel_3.add(lblNewLabel_1);
 			
 			passwordField_1 = new JPasswordField();
-			passwordField_1.setBounds(147, 23, 105, 26);
+			passwordField_1.setBounds(147, 21, 105, 26);
 			panel_3.add(passwordField_1);
 			passwordField_1.setColumns(10);
 			
@@ -294,7 +293,7 @@ public class ForgetPwFrame extends JFrame {
 		}
 		else {
 			if(ForgetPwDao.validate(user) != null) {
-				if(ForgetPwDao.validate(user).isIsmanager() == false) {
+				if(!ForgetPwDao.validate(user).isIsmanager()) {
 					if(tel.equals("") || name.equals("")) {
 						JOptionPane.showMessageDialog(null, "验证信息不完整！", "提示", JOptionPane.INFORMATION_MESSAGE);
 					}
@@ -346,7 +345,7 @@ public class ForgetPwFrame extends JFrame {
 		else {
 			if(pw.length()>=8 && pw.length()<=20) {
 				if(pw.equals(pwR)) {
-					if(ForgetPwDao.samePassword(user, pw) == false) {
+					if(!ForgetPwDao.samePassword(user, pw)) {
 						if(ForgetPwDao.passwordUpdate(user, pw)!=0) {
 							JOptionPane.showMessageDialog(null, "修改密码成功，返回！", "提示", JOptionPane.INFORMATION_MESSAGE);
 							fpn.dispose();

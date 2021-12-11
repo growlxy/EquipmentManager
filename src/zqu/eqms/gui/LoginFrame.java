@@ -94,9 +94,8 @@ public class LoginFrame extends JFrame {
 		panel.add(panel_2);
 		
 		textField = new JTextField();
-		textField.setBounds(168, 39, 105, 26);
+		textField.setBounds(168, 38, 105, 26);
 		textField.setColumns(10);
-		textField.setToolTipText("test");
 		
 		JLabel lblNewLabel_2 = new JLabel("<html><u>注册</u><html>");
 		lblNewLabel_2.setForeground(Color.BLUE);
