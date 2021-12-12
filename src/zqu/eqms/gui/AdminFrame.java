@@ -25,12 +25,19 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
+import zqu.eqms.dao.AllDepartmentDao;
 import zqu.eqms.dao.AllEquipmentDao;
+import zqu.eqms.dao.AllStaffDao;
 import zqu.eqms.dao.EquipmentDateDao;
 import zqu.eqms.dao.EquipmentLocDao;
 import zqu.eqms.dao.EquipmentManaDao;
 import zqu.eqms.dao.EquipmentNameDao;
+import zqu.eqms.dao.StaffDepDao;
+import zqu.eqms.dao.StaffNameDao;
+import zqu.eqms.dao.StaffTelDao;
+import zqu.eqms.domain.DepartmentDomain;
 import zqu.eqms.domain.EquipmentDomain;
+import zqu.eqms.domain.StaffDomain;
 
 public class AdminFrame extends JFrame {
 
@@ -40,21 +47,33 @@ public class AdminFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
-	private JTextField textField;
 	private JTable table_1;
-	private JTextField textField_1;
 	private JTable table_2;
-	private String[] columns = {"编号", "名字", "规格", "价格", "购入日期", "存放位置", "设备负责人"};
 	private JTable table_3;
-	private JTextField textField_2;
 	private JTable table_4;
+	private JTable table_5;
+	private JTable table_6;
+	private JTable table_7;
+	private JTable table_8;
+	private JTable table_9;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
 	private JTextField textField_8;
-
+	private JTextField textField_9;
+	private JTextField textField_10;
+	private JTextField textField_11;
+	private String[] depColumns = {"编号", "名称", "部门主管"};
+	private String[] staffColumns = {"编号", "姓名", "联络电话", "是否为管理员", "部门"};
+	private String[] equipColumns = {"编号", "名称", "规格", "价格", "购入日期", "存放位置", "设备负责人"};
+	private JTextField textField_12;
+	private JTable table_10;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -120,36 +139,217 @@ public class AdminFrame extends JFrame {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("关于作者");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "软件作者：growlxy", "提示", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
 		setContentPane(contentPane);
 		
+		JTabbedPane tabbedPane_1 = new JTabbedPane(JTabbedPane.TOP);
+		contentPane.add(tabbedPane_1, BorderLayout.CENTER);
+		
+		JTabbedPane tabbedPane_3 = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_1.addTab("关于部门", null, tabbedPane_3, null);
+		
+		JPanel panel_9 = new JPanel();
+		tabbedPane_3.addTab("总览", null, panel_9, null);
+		panel_9.setLayout(new BorderLayout(0, 0));
+		
+		JScrollPane scrollPane_5 = new JScrollPane();
+		panel_9.add(scrollPane_5, BorderLayout.CENTER);
+	
+		table_5 = new JTable();
+		table_5.setModel(new DefaultTableModel(
+			fillDepTable(AllDepartmentDao.displayAllDepartment()),
+			depColumns
+		));
+		scrollPane_5.setViewportView(table_5);
+		
+		JPanel panel_13 = new JPanel();
+		tabbedPane_3.addTab("修改信息", null, panel_13, null);
+		
+		JPanel panel_14 = new JPanel();
+		tabbedPane_3.addTab("增加部门", null, panel_14, null);
+		
+		JPanel panel_15 = new JPanel();
+		tabbedPane_3.addTab("删除部门", null, panel_15, null);
+		
+		JTabbedPane tabbedPane_2 = new JTabbedPane(JTabbedPane.TOP);
+		tabbedPane_1.addTab("关于员工", null, tabbedPane_2, null);
+	
+		JPanel panel_16 = new JPanel();
+		tabbedPane_2.addTab("总览", null, panel_16, null);
+		panel_16.setLayout(new BorderLayout(0, 0));
+		
+		JScrollPane scrollPane_6 = new JScrollPane();
+		panel_16.add(scrollPane_6, BorderLayout.CENTER);
+		
+		table_6 = new JTable();
+		table_6.setModel(new DefaultTableModel(
+			fillStaffTable(AllStaffDao.displayAllStaff()),
+			staffColumns
+		));
+		scrollPane_6.setViewportView(table_6);
+		
+		JPanel panel_17 = new JPanel();
+		tabbedPane_2.addTab("按姓名查找", null, panel_17, null);
+		panel_17.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_24 = new JPanel();
+		FlowLayout flowLayout_5 = (FlowLayout) panel_24.getLayout();
+		flowLayout_5.setAlignment(FlowLayout.LEFT);
+		flowLayout_5.setVgap(7);
+		panel_17.add(panel_24, BorderLayout.NORTH);
+		
+		JLabel lblNewLabel_15 = new JLabel("请输入要查找的姓名： ");
+		lblNewLabel_15.setFont(new Font("宋体", Font.PLAIN, 14));
+		panel_24.add(lblNewLabel_15);
+		
+		textField_9 = new JTextField();
+		panel_24.add(textField_9);
+		textField_9.setColumns(26);
+		
+		JLabel lblNewLabel_16 = new JLabel(" ");
+		panel_24.add(lblNewLabel_16);
+	
+		JButton btnNewButton_4 = new JButton("查  找");
+		btnNewButton_4.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String item = textField_9.getText();
+				table_7.setModel(new DefaultTableModel(
+						fillStaffTable(StaffNameDao.displayStaff(item)),
+						staffColumns
+				));
+			}
+		});
+		btnNewButton_4.setFont(new Font("宋体", Font.PLAIN, 13));
+		panel_24.add(btnNewButton_4);
+		
+		JScrollPane scrollPane_7 = new JScrollPane();
+		panel_17.add(scrollPane_7, BorderLayout.CENTER);
+		
+		table_7 = new JTable();
+		table_7.setModel(new DefaultTableModel(
+			new Object[][] {},
+			staffColumns
+		));
+		scrollPane_7.setViewportView(table_7);
+		
+		JPanel panel_18 = new JPanel();
+		tabbedPane_2.addTab("按电话号码查找", null, panel_18, null);
+		panel_18.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_25 = new JPanel();
+		FlowLayout flowLayout_6 = (FlowLayout) panel_25.getLayout();
+		flowLayout_6.setAlignment(FlowLayout.LEFT);
+		flowLayout_6.setVgap(7);
+		panel_18.add(panel_25, BorderLayout.NORTH);
+		
+		JLabel lblNewLabel_17 = new JLabel("请输入要查找的号码： ");
+		lblNewLabel_17.setFont(new Font("宋体", Font.PLAIN, 14));
+		panel_25.add(lblNewLabel_17);
+		
+		textField_10 = new JTextField();
+		panel_25.add(textField_10);
+		textField_10.setColumns(26);
+		
+		JLabel lblNewLabel_18 = new JLabel(" ");
+		panel_25.add(lblNewLabel_18);
+
+		JButton btnNewButton_5 = new JButton("查  找");
+		btnNewButton_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String item = textField_10.getText();
+				table_8.setModel(new DefaultTableModel(
+						fillStaffTable(StaffTelDao.displayStaff(item)),
+						staffColumns
+				));
+			}
+		});
+		btnNewButton_5.setFont(new Font("宋体", Font.PLAIN, 13));
+		panel_25.add(btnNewButton_5);
+		
+		JScrollPane scrollPane_8 = new JScrollPane();
+		panel_18.add(scrollPane_8, BorderLayout.CENTER);
+		
+		table_8 = new JTable();
+		table_8.setModel(new DefaultTableModel(
+			new Object[][] {},
+			staffColumns
+		));
+		scrollPane_8.setViewportView(table_8);
+		
+		JPanel panel_19 = new JPanel();
+		tabbedPane_2.addTab("按部门查找", null, panel_19, null);
+		panel_19.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_26 = new JPanel();
+		FlowLayout flowLayout_7 = (FlowLayout) panel_26.getLayout();
+		flowLayout_7.setVgap(7);
+		flowLayout_7.setAlignment(FlowLayout.LEFT);
+		panel_19.add(panel_26, BorderLayout.NORTH);
+		
+		JLabel lblNewLabel_19 = new JLabel("请输入要查找的部门： ");
+		lblNewLabel_19.setFont(new Font("宋体", Font.PLAIN, 14));
+		panel_26.add(lblNewLabel_19);
+		
+		textField_11 = new JTextField();
+		panel_26.add(textField_11);
+		textField_11.setColumns(26);
+		
+		JLabel lblNewLabel_20 = new JLabel(" ");
+		panel_26.add(lblNewLabel_20);
+
+		JButton btnNewButton_6 = new JButton("查  找");
+		btnNewButton_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String item = textField_11.getText();
+				table_9.setModel(new DefaultTableModel(
+						fillStaffTable(StaffDepDao.displayStaff(item)),
+						staffColumns
+				));
+			}
+		});
+		btnNewButton_6.setFont(new Font("宋体", Font.PLAIN, 13));
+		panel_26.add(btnNewButton_6);
+		
+		JScrollPane scrollPane_9 = new JScrollPane();
+		panel_19.add(scrollPane_9, BorderLayout.CENTER);
+		
+		table_9 = new JTable();
+		table_9.setModel(new DefaultTableModel(
+			new Object[][] {},
+			staffColumns
+		));
+		scrollPane_9.setViewportView(table_9);
+		
+		JPanel panel_20 = new JPanel();
+		tabbedPane_2.addTab("修改信息", null, panel_20, null);
+		
+		JPanel panel_21 = new JPanel();
+		tabbedPane_2.addTab("增加员工", null, panel_21, null);
+		
+		JPanel panel_22 = new JPanel();
+		tabbedPane_2.addTab("删除员工", null, panel_22, null);
+		
+		JPanel panel_23 = new JPanel();
+		tabbedPane_2.addTab("设置管理员", null, panel_23, null);
+		
 		JTabbedPane tabbedPane = new JTabbedPane(JTabbedPane.TOP);
-		contentPane.add(tabbedPane, BorderLayout.CENTER);
+		tabbedPane_1.addTab("关于设备", null, tabbedPane, null);
 	
 		JScrollPane scrollPane = new JScrollPane();
 		tabbedPane.addTab("总览", null, scrollPane, null);
 		
-		int cnt = AllEquipmentDao.displayAllEquipment().size();
-		int i = 0;
-		String[][] data = new String[cnt][7];
-		for(EquipmentDomain ed : AllEquipmentDao.displayAllEquipment()) {
-			data[i][0] = ed.getId();
-			data[i][1] = ed.getName();
-			data[i][2] = ed.getSpec();
-			data[i][3] = String.valueOf(ed.getPrice());
-			data[i][4] = String.valueOf(ed.getDate());
-			data[i][5] = ed.getLoc();
-			data[i][6] = ed.getManager();
-			i++;
-		}
-		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
-			data,
-			columns
+			fillEquipTable(AllEquipmentDao.displayAllEquipment()),
+			equipColumns
 		));
 		scrollPane.setViewportView(table);
 		table.getSelectedColumn();
@@ -157,7 +357,7 @@ public class AdminFrame extends JFrame {
 		JPanel panel_2 = new JPanel();
 		tabbedPane.addTab("按名称查找", null, panel_2, null);
 		panel_2.setLayout(new BorderLayout(0, 0));
-		
+//TODO		
 		JPanel panel_1 = new JPanel();
 		FlowLayout flowLayout_1 = (FlowLayout) panel_1.getLayout();
 		flowLayout_1.setAlignment(FlowLayout.LEFT);
@@ -180,8 +380,8 @@ public class AdminFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String item = textField.getText();
 				table_1.setModel(new DefaultTableModel(
-						fillTable(EquipmentNameDao.displayEquipment(item)),
-						columns
+						fillEquipTable(EquipmentNameDao.displayEquipment(item)),
+						equipColumns
 				));
 			}
 		});
@@ -194,7 +394,7 @@ public class AdminFrame extends JFrame {
 		table_1 = new JTable();
 		table_1.setModel(new DefaultTableModel(
 			new Object[][] {},
-			columns
+			equipColumns
 		));
 		scrollPane_1.setViewportView(table_1);
 		
@@ -280,13 +480,13 @@ public class AdminFrame extends JFrame {
 				if(data == null) {
 					table_4.setModel(new DefaultTableModel(
 							new Object[][] {},
-							columns
+							equipColumns
 					));
 				}
 				else {
 					table_4.setModel(new DefaultTableModel(
-							fillTable(data),
-							columns
+							fillEquipTable(data),
+							equipColumns
 					));
 				}
 			}
@@ -304,12 +504,12 @@ public class AdminFrame extends JFrame {
 		table_4 = new JTable();
 		table_4.setModel(new DefaultTableModel(
 			new Object[][] {},
-			columns
+			equipColumns
 		));
 		scrollPane_4.setViewportView(table_4);
 		
 		JPanel panel_4 = new JPanel();
-		tabbedPane.addTab("按存放位置查找", null, panel_4, null);
+		tabbedPane.addTab("按位置查找", null, panel_4, null);
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panel_6 = new JPanel();
@@ -331,8 +531,8 @@ public class AdminFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String item = textField_1.getText();
 				table_2.setModel(new DefaultTableModel(
-						fillTable(EquipmentLocDao.displayEquipment(item)),
-						columns
+						fillEquipTable(EquipmentLocDao.displayEquipment(item)),
+						equipColumns
 				));
 			}
 		});
@@ -348,7 +548,7 @@ public class AdminFrame extends JFrame {
 		table_2 = new JTable();
 		table_2.setModel(new DefaultTableModel(
 			new Object[][] {},
-			columns
+			equipColumns
 		));
 		scrollPane_2.setViewportView(table_2);
 		
@@ -375,8 +575,8 @@ public class AdminFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String item = textField_2.getText();
 				table_3.setModel(new DefaultTableModel(
-						fillTable(EquipmentManaDao.displayEquipment(item)),
-						columns
+						fillEquipTable(EquipmentManaDao.displayEquipment(item)),
+						equipColumns
 				));
 			}
 		});
@@ -392,21 +592,98 @@ public class AdminFrame extends JFrame {
 		table_3 = new JTable();
 		table_3.setModel(new DefaultTableModel(
 			new Object[][] {},
-			columns
+			equipColumns
 		));
 		scrollPane_3.setViewportView(table_3);
 		
+		JPanel panel_10 = new JPanel();
+		tabbedPane.addTab("修改信息", null, panel_10, null);
+		panel_10.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panel_27 = new JPanel();
+		FlowLayout flowLayout_8 = (FlowLayout) panel_27.getLayout();
+		flowLayout_8.setVgap(7);
+		flowLayout_8.setAlignment(FlowLayout.LEFT);
+		panel_10.add(panel_27, BorderLayout.NORTH);
+		
+		JLabel lblNewLabel_21 = new JLabel("请输入要查找名称： ");
+		lblNewLabel_21.setFont(new Font("宋体", Font.PLAIN, 14));
+		panel_27.add(lblNewLabel_21);
+		
+		textField_12 = new JTextField();
+		panel_27.add(textField_12);
+		textField_12.setColumns(26);
+		
+		JLabel lblNewLabel_22 = new JLabel(" ");
+		panel_27.add(lblNewLabel_22);
+//		TODO
+		JButton btnNewButton_7 = new JButton("查  找");
+		btnNewButton_7.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String item = textField_12.getText();
+				table_10.setModel(new DefaultTableModel(
+						fillEquipTable(EquipmentNameDao.displayEquipment(item)),
+						equipColumns
+				));
+			}
+		});
+		panel_27.add(btnNewButton_7);
+		
+		JScrollPane scrollPane_10 = new JScrollPane();
+		panel_10.add(scrollPane_10, BorderLayout.CENTER);
+		
+		table_10 = new JTable();
+		table_10.setModel(new DefaultTableModel(
+			new Object[][] {},
+			equipColumns
+		));
+		scrollPane_10.setViewportView(table_10);
+		
+		JPanel panel_11 = new JPanel();
+		tabbedPane.addTab("增加设备", null, panel_11, null);
+		
+		JPanel panel_12 = new JPanel();
+		tabbedPane.addTab("删除设备", null, panel_12, null);
+		
 		JPanel panel = new JPanel();
 		FlowLayout flowLayout = (FlowLayout) panel.getLayout();
-		flowLayout.setVgap(10);
+		flowLayout.setVgap(1);
 		contentPane.add(panel, BorderLayout.NORTH);
 		
-		JLabel lblNewLabel = new JLabel("管理员"+user+"，请选择您要查找的对象");
+		JLabel lblNewLabel = new JLabel("管理员"+user+"，请选择您需要的功能");
 		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 14));
 		panel.add(lblNewLabel);
 	}
+//TODO
+	public String[][] fillDepTable(ArrayList<DepartmentDomain> al){
+		int cnt = al.size();
+		int i = 0;
+		String[][] data = new String[cnt][3];
+		for(DepartmentDomain dd : al) {
+			data[i][0] = dd.getId();
+			data[i][1] = dd.getName();
+			data[i][2] = dd.getManager();
+			i++;
+		}
+		return data;
+	}
 	
-	public String[][] fillTable(ArrayList<EquipmentDomain> al) {
+	public String[][] fillStaffTable(ArrayList<StaffDomain> al){
+		int cnt = al.size();
+		int i = 0;
+		String[][] data = new String[cnt][5];
+		for(StaffDomain sd : al) {
+			data[i][0] = sd.getId();
+			data[i][1] = sd.getName();
+			data[i][2] = sd.getTel();
+			data[i][3] = String.valueOf(sd.isIsmanager());
+			data[i][4] = sd.getDepid();
+			i++;
+		}
+		return data;
+	}
+	
+	public String[][] fillEquipTable(ArrayList<EquipmentDomain> al) {
 		int cnt = al.size();
 		int i = 0;
 		String[][] data = new String[cnt][7];

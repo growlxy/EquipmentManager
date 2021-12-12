@@ -42,20 +42,20 @@ public class UserFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
-	private JTextField textField;
 	private JTable table_1;
-	private JTextField textField_1;
 	private JTable table_2;
-	private String[] columns = {"编号", "名字", "规格", "价格", "购入日期", "存放位置", "设备负责人"};
 	private JTable table_3;
-	private JTextField textField_2;
 	private JTable table_4;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
 	private JTextField textField_3;
 	private JTextField textField_4;
 	private JTextField textField_5;
 	private JTextField textField_6;
 	private JTextField textField_7;
 	private JTextField textField_8;
+	private String[] columns = {"编号", "名称", "规格", "价格", "购入日期", "存放位置", "设备负责人"};
 
 	/**
 	 * Launch the application.
@@ -122,6 +122,11 @@ public class UserFrame extends JFrame {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("关于作者");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null, "软件作者：growlxy", "提示", JOptionPane.INFORMATION_MESSAGE);
+			}
+		});
 		mnNewMenu_1.add(mntmNewMenuItem_2);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -403,7 +408,7 @@ public class UserFrame extends JFrame {
 		flowLayout.setVgap(10);
 		contentPane.add(panel, BorderLayout.NORTH);
 		
-		JLabel lblNewLabel = new JLabel("用户"+user+"，请选择您要查找的对象");
+		JLabel lblNewLabel = new JLabel("用户"+user+"，请选择您需要的功能");
 		lblNewLabel.setFont(new Font("宋体", Font.PLAIN, 14));
 		panel.add(lblNewLabel);
 	}
