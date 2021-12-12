@@ -84,7 +84,7 @@ public class RegisterFrame extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("选择");
+		JMenu mnNewMenu = new JMenu("文件");
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("返回登录");
