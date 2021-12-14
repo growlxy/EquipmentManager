@@ -206,6 +206,9 @@ public class LoginFrame extends JFrame {
 						if (user.equals(sd.getId()) && pw.equals(sd.getPassword())) {
 							JOptionPane.showMessageDialog(null, "欢迎您，管理员" + user + "！", "提示",
 									JOptionPane.INFORMATION_MESSAGE);
+							dispose();
+							AdminFrame af = new AdminFrame(user);
+							af.setVisible(true);
 						} else {
 							JOptionPane.showMessageDialog(null, "帐号或密码错误！", "提示", JOptionPane.INFORMATION_MESSAGE);
 							clear();

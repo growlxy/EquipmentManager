@@ -50,6 +50,7 @@ import javax.swing.border.MatteBorder;
 import java.awt.Color;
 import javax.swing.JComboBox;
 import javax.swing.border.BevelBorder;
+import javax.swing.JPasswordField;
 
 public class AdminFrame extends JFrame {
 
@@ -101,7 +102,7 @@ public class AdminFrame extends JFrame {
 	private JTextField textField_23;
 	private JTextField textField_24;
 	private JTextField textField_25;
-	private JTextField textField_26;
+	private JPasswordField textField_26;
 	private JTextField textField_27;
 	private JTextField textField_28;
 	private JTextField textField_29;
@@ -653,7 +654,7 @@ public class AdminFrame extends JFrame {
 				}
 				if (comboBox_1.getSelectedIndex() != 0)
 					depid = dno[comboBox_1.getSelectedIndex() - 1];
-				createStaff(textField_25.getText(), textField_26.getText(), textField_27.getText(),
+				createStaff(textField_25.getText(), new String(textField_26.getPassword()), textField_27.getText(),
 						textField_28.getText(), String.valueOf(comboBox.getSelectedItem()), depid);
 			}
 		});
@@ -697,7 +698,7 @@ public class AdminFrame extends JFrame {
 		lblNewLabel_44.setFont(new Font("宋体", Font.PLAIN, 14));
 		panel_45.add(lblNewLabel_44);
 
-		textField_26 = new JTextField();
+		textField_26 = new JPasswordField();
 		textField_26.setBounds(135, 33, 122, 27);
 		panel_45.add(textField_26);
 		textField_26.setColumns(10);
