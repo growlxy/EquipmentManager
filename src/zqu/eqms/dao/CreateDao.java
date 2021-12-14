@@ -4,18 +4,17 @@ import java.sql.*;
 
 import zqu.eqms.util.ConnectionUtil;
 
-public class UpdateDao {
+public class CreateDao {
 	protected static PreparedStatement ps = null;
 	protected static ResultSet rs = null;
 	
-	public static int DepUpdate(String id, String name, String manager) {
+	public static int createDep(String id, String name, String manager) {
 		int result = 0;
-		
 		try {
-			String sql = "update department set"
-					+ " dname='" + name + "',"
-					+ " dmanager='" + manager + "'"
-					+ " where dno='" + id + "'";
+			String sql = "insert into department values('"
+					+ id + "','"
+					+ name + "','"
+					+ manager + "')";
 			ps = ConnectionUtil.getConnection().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			result = ps.executeUpdate();
 		} catch (SQLException e) {
@@ -26,15 +25,18 @@ public class UpdateDao {
 		return result;
 	}
 	
-	public static int StaffUpdate(String id, String name, String tel, String dep) {
+	public static int createStaff(String id, String password, String name, String tel, String isMana, String depid) {
+		if(isMana=="是") isMana="true";
+		if(isMana=="否") isMana="false";
 		int result = 0;
-		
 		try {
-			String sql = "update staff set"
-					+ " sname='" + name + "',"
-					+ " stel='" + tel + "',"
-					+ " sdepno='" + dep + "'"
-					+ " where sno='" + id + "'";
+			String sql = "insert into staff values('"
+					+ id + "','"
+					+ password + "','"
+					+ name + "','"
+					+ tel + "',"
+					+ isMana + ",'"
+					+ depid + "')";
 			ps = ConnectionUtil.getConnection().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			result = ps.executeUpdate();
 		} catch (SQLException e) {
@@ -45,35 +47,37 @@ public class UpdateDao {
 		return result;
 	}
 	
-	public static int EquipUpdate(String id, String name, String spec, String price, String date, String loc, String manager) {
-		int result = 0;
+	public static String equipIdRetrieve() {
+		String id = null;
 		
 		try {
-			String sql = "update equipment set"
-					+ " ename='" + name + "',"
-					+ " espec='" + spec + "',"
-					+ " eprice=" + price + ","
-					+ " edate=" + date.replaceAll("-", "") + ","
-					+ " eloc='" + loc + "',"
-					+ " emanager='" + manager + "'"
-					+ " where eno='" + id + "'";
+			String sql = "select *"
+					+ " from equipment";
 			ps = ConnectionUtil.getConnection().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-			result = ps.executeUpdate();
+			rs = ps.executeQuery();
+			rs.last();
+			id = rs.getString("eno");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			ConnectionUtil.close();
 		}
-		return result;
+		return id;
 	}
 
-	public static int managerUpdate(String id) {
+	public static int createEquip(String name, String spec, String price, String date, String loc, String manager) {
+		String id = String.format("%05d", Integer.parseInt(equipIdRetrieve())+1);
 		int result = 0;
-		
 		try {
-			String sql = "update staff set"
-					+ " sis_mana=TRUE"
-					+ " where sno='" + id + "'";
+			String sql = "insert into equipment values('"
+					+ id + "','"
+					+ name + "','"
+					+ spec + "','"
+					+ "" + "',"
+					+ price + ","
+					+ date + ",'"
+					+ loc + "','"
+					+ manager + "')";
 			ps = ConnectionUtil.getConnection().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
 			result = ps.executeUpdate();
 		} catch (SQLException e) {
