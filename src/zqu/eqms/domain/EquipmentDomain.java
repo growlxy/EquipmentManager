@@ -12,9 +12,9 @@ public class EquipmentDomain {
 	private Date date;
 	private String loc;
 	private String manager;
-	
-	public EquipmentDomain(String id, String name, String spec, Blob pic, double price, Date date,
-			String loc, String manager) {
+
+	public EquipmentDomain(String id, String name, String spec, Blob pic, double price, Date date, String loc,
+			String manager) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -50,7 +50,6 @@ public class EquipmentDomain {
 		this.spec = spec;
 	}
 
-	
 	public Blob getPic() {
 		return pic;
 	}

@@ -9,13 +9,13 @@ public class ConnectionUtil {
 	private static String url;
 	private static String username;
 	private static String password;
-			
+
 	protected static Connection conn = null;
 	protected static PreparedStatement ps = null;
 	protected static ResultSet rs = null;
-	
+
 	static {
-		try {			
+		try {
 			properties.load(PropertiesUtil.class.getResourceAsStream("/database.properties"));
 			driver = properties.getProperty("jdbc.driver");
 			url = properties.getProperty("jdbc.url");
@@ -25,8 +25,9 @@ public class ConnectionUtil {
 			e.printStackTrace();
 		}
 	}
-	
+
 	private static ThreadLocal<Connection> td = new ThreadLocal<Connection>();
+
 	public static Connection getConnection() {
 		Connection conn = td.get();
 		try {
@@ -40,12 +41,15 @@ public class ConnectionUtil {
 		}
 		return conn;
 	}
-	
+
 	public static void close() {
 		try {
-			if(rs!=null) rs.close();
-			if(ps!=null) ps.close();
-			if(conn!=null) conn.close();
+			if (rs != null)
+				rs.close();
+			if (ps != null)
+				ps.close();
+			if (conn != null)
+				conn.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

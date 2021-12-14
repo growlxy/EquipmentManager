@@ -8,14 +8,14 @@ create table Staff(
 Sno varchar(10) primary key,
 Spw varchar(20) not null,
 Sname varchar(5) not null,
-Stel int not null,
+Stel varchar(11) not null,
 Sis_mana boolean not null,
 Sdepno varchar(5) not null,
 foreign key(Sdepno) references Department(Dno));
 create table Equipment(
 Eno varchar(5) primary key,
-Ename varchar(10) unique,
-Espec varchar(10) not null,
+Ename varchar(20) not null,
+Espec varchar(20) not null,
 Epic blob,
 Eprice double(7, 2) not null,
 Edate date not null,

@@ -9,13 +9,13 @@ import zqu.eqms.util.ConnectionUtil;
 public class EquipmentLocDao {
 	protected static PreparedStatement ps = null;
 	protected static ResultSet rs = null;
-	
+
 	public static ResultSet equipmentLocQuery(String item) {
 		try {
 			String sql = "select e.eno, e.ename, e.espec, e.epic, e.eprice, e.edate, e.eloc, e.emanager"
-					+ " from equipment e"
-					+ " where eloc like '%"+item+"%'";
-			ps = ConnectionUtil.getConnection().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+					+ " from equipment e where eloc like '%" + item + "%'";
+			ps = ConnectionUtil.getConnection().prepareStatement(sql, ResultSet.TYPE_SCROLL_INSENSITIVE,
+					ResultSet.CONCUR_READ_ONLY);
 			rs = ps.executeQuery();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -24,14 +24,15 @@ public class EquipmentLocDao {
 		}
 		return rs;
 	}
-	
-	public static ArrayList<EquipmentDomain> displayEquipment(String item){
+
+	public static ArrayList<EquipmentDomain> displayEquipment(String item) {
 		rs = equipmentLocQuery(item);
 		ArrayList<EquipmentDomain> al = new ArrayList<EquipmentDomain>();
 		try {
-			while(rs.next()) {
+			while (rs.next()) {
 				al.add(new EquipmentDomain(rs.getString("eno"), rs.getString("ename"), rs.getString("espec"),
-						rs.getBlob("epic"), rs.getDouble("eprice"), rs.getDate("edate"), rs.getString("eloc"), rs.getString("emanager")));
+						rs.getBlob("epic"), rs.getDouble("eprice"), rs.getDate("edate"), rs.getString("eloc"),
+						rs.getString("emanager")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

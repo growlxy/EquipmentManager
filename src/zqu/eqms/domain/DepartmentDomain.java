@@ -4,7 +4,7 @@ public class DepartmentDomain {
 	private String id;
 	private String name;
 	private String manager;
-	
+
 	public DepartmentDomain(String id, String name, String manager) {
 		super();
 		this.id = id;
