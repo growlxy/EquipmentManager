@@ -433,7 +433,7 @@ public class AdminFrame extends JFrame {
 		table_15.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Delete(table_15.getValueAt(table_15.getSelectedRow(), 0), 0);
+				Delete(table_15.getValueAt(table_15.getSelectedRow(), 0), user, 0);
 			}
 		});
 		table_15.setModel(new DefaultTableModel(new Object[][] {}, depColumns));
@@ -806,7 +806,7 @@ public class AdminFrame extends JFrame {
 		table_14.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Delete(table_14.getValueAt(table_14.getSelectedRow(), 0), 1);
+				Delete(table_14.getValueAt(table_14.getSelectedRow(), 0), user, 1);
 			}
 		});
 		scrollPane_14.setViewportView(table_14);
@@ -1306,7 +1306,7 @@ public class AdminFrame extends JFrame {
 		table_13.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Delete(table_13.getValueAt(table_13.getSelectedRow(), 0), 2);
+				Delete(table_13.getValueAt(table_13.getSelectedRow(), 0), user, 2);
 			}
 		});
 		table_13.setModel(new DefaultTableModel(new Object[][] {}, equipColumns));
@@ -1449,7 +1449,7 @@ public class AdminFrame extends JFrame {
 		}
 	}
 
-	public void Delete(Object id, int tableSel) {
+	public void Delete(Object id, String user, int tableSel) {
 		Object[] options = { "确定", "取消" };
 		int sel = JOptionPane.showOptionDialog(null, "真的要删除吗？", "确定？", JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
@@ -1460,8 +1460,13 @@ public class AdminFrame extends JFrame {
 				}
 			}
 			if (tableSel == 1) {
-				if (DeleteDao.StaffDel(String.valueOf(id)) != 0) {
-					JOptionPane.showMessageDialog(null, "删除成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+				if(!id.equals(user)) {
+					if (DeleteDao.StaffDel(String.valueOf(id)) != 0) {
+						JOptionPane.showMessageDialog(null, "删除成功！", "提示", JOptionPane.INFORMATION_MESSAGE);
+					}
+				}
+				else {
+					JOptionPane.showMessageDialog(null, "管理员不能删除自己！", "提示", JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 			if (tableSel == 2) {

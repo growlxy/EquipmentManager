@@ -22,7 +22,7 @@ public class DeleteDao {
 		}
 		return result;
 	}
-
+	
 	public static int StaffDel(String id) {
 		int result = 0;
 		try {
